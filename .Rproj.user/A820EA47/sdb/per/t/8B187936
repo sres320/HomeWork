@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "###Homework 3 詳細要求與配分1 \n##Title: NBA 2014-2015球季 各隊分析 (`5 pt`) \n #把資料讀進來的程式碼 (`5 pt`) \n#次標題1：各隊最辛苦的球員 (`20 pt`) \n #標題 (`2`)，說明 (`3`)，程式碼 (`5`) 和結果 (`10`) \n #結果要包括隊名 (`2`) 與球員姓名 (`3`) 與總出場分鐘數 (`3`)，按照總出場分鐘數排序(大到小) (`2`) \n#次標題2：各隊得分王 (`20 pt`) - 程式碼和結果，輸出要包括隊名與球員姓名與總分，按照總分排序 \n#次標題3：各隊最有效率的球員 (`25 pt`) - 程式碼和結果，輸出要包括隊名與球員姓名與效率計算結果 (`8`)，按照效率計算結果排序 \n#次標題4：各隊三分球出手最準的球員 (`25 pt`) - 程式碼和結果，輸出要包括隊名與球員姓名與三分球命中率 (`8`)，按照三分球命中率排序",
+    "created" : 1458574453245.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "201344687",
+    "id" : "8B187936",
+    "lastKnownWriteTime" : 1458574681,
+    "last_content_update" : 1458574681405,
+    "path" : "D:/BIGDATA/HomeWork/0321HW.R",
+    "project_path" : "0321HW.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
