@@ -119,41 +119,836 @@ NBA1415&lt;-fetch_NBAPlayerStatistics(&quot;14-15&quot;)</code></pre>
 <pre><code>install.packages(&quot;knitr&quot;)</code></pre>
 <div class="section level2">
 <h2>各隊最辛苦的球員</h2>
-<p>111</p>
+<p>首先將設Maxtired為NBA1415中、每個Team裡面依照TotalMinutesPlayed來排序為最高分的，</p>
+<p>再將NBA1415、Maxtired合併成為一個新的表格NBA1415Maxtired，</p>
+<p>print NBA1415Maxtired，項目包含“Team”,“Name”,“TotalMinutesPlayed”，</p>
+<p>並以TotalMinutesPlayed由大而小排列，最後再用knitr製成表格。</p>
 <pre><code>Maxtired=aggregate(TotalMinutesPlayed~Team,NBA1415,max)
 NBA1415Maxtired=merge(NBA1415,Maxtired)
 print=NBA1415Maxtired[order(NBA1415Maxtired$TotalMinutesPlayed,decreasing = T),c(&quot;Team&quot;,&quot;Name&quot;,&quot;TotalMinutesPlayed&quot;)]
 library(knitr)
 kable(print, digits=2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Team</th>
+<th align="left">Name</th>
+<th align="right">TotalMinutesPlayed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">HOU</td>
+<td align="left">James Harden</td>
+<td align="right">2979</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">MIN</td>
+<td align="left">Andrew Wiggins</td>
+<td align="right">2971</td>
+</tr>
+<tr class="odd">
+<td align="left">25</td>
+<td align="left">POR</td>
+<td align="left">Damian Lillard</td>
+<td align="right">2928</td>
+</tr>
+<tr class="even">
+<td align="left">13</td>
+<td align="left">LAC</td>
+<td align="left">Chris Paul</td>
+<td align="right">2860</td>
+</tr>
+<tr class="odd">
+<td align="left">30</td>
+<td align="left">WAS</td>
+<td align="left">John Wall</td>
+<td align="right">2841</td>
+</tr>
+<tr class="even">
+<td align="left">24</td>
+<td align="left">PHO</td>
+<td align="left">Eric Bledsoe</td>
+<td align="right">2799</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">BRO</td>
+<td align="left">Joe Johnson</td>
+<td align="right">2787</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">CLE</td>
+<td align="left">Kyrie Irving</td>
+<td align="right">2735</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">DAL</td>
+<td align="left">Monta Ellis</td>
+<td align="right">2698</td>
+</tr>
+<tr class="even">
+<td align="left">19</td>
+<td align="left">NOR</td>
+<td align="left">Tyreke Evans</td>
+<td align="right">2695</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">MEM</td>
+<td align="left">Marc Gasol</td>
+<td align="right">2690</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">CHI</td>
+<td align="left">Pau Gasol</td>
+<td align="right">2682</td>
+</tr>
+<tr class="odd">
+<td align="left">26</td>
+<td align="left">SAC</td>
+<td align="left">Ben Mclemore</td>
+<td align="right">2674</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">DEN</td>
+<td align="left">Ty Lawson</td>
+<td align="right">2668</td>
+</tr>
+<tr class="odd">
+<td align="left">16</td>
+<td align="left">MIA</td>
+<td align="left">Goran Dragic</td>
+<td align="right">2641</td>
+</tr>
+<tr class="even">
+<td align="left">29</td>
+<td align="left">UTA</td>
+<td align="left">Gordon Hayward</td>
+<td align="right">2618</td>
+</tr>
+<tr class="odd">
+<td align="left">10</td>
+<td align="left">GSW</td>
+<td align="left">Stephen Curry</td>
+<td align="right">2613</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="left">DET</td>
+<td align="left">Ke Caldwell-pope</td>
+<td align="right">2591</td>
+</tr>
+<tr class="odd">
+<td align="left">22</td>
+<td align="left">ORL</td>
+<td align="left">Victor Oladipo</td>
+<td align="right">2572</td>
+</tr>
+<tr class="even">
+<td align="left">17</td>
+<td align="left">MIL</td>
+<td align="left">G Antetokounmpo</td>
+<td align="right">2542</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">BOS</td>
+<td align="left">Avery Bradley</td>
+<td align="right">2427</td>
+</tr>
+<tr class="even">
+<td align="left">28</td>
+<td align="left">TOR</td>
+<td align="left">Kyle Lowry</td>
+<td align="right">2422</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">ATL</td>
+<td align="left">Kyle Korver</td>
+<td align="right">2418</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">IND</td>
+<td align="left">Solomon Hill</td>
+<td align="right">2380</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">CHA</td>
+<td align="left">Gerald Henderson</td>
+<td align="right">2323</td>
+</tr>
+<tr class="even">
+<td align="left">23</td>
+<td align="left">PHI</td>
+<td align="left">Nerlens Noel</td>
+<td align="right">2311</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">SAN</td>
+<td align="left">Danny Green</td>
+<td align="right">2311</td>
+</tr>
+<tr class="even">
+<td align="left">21</td>
+<td align="left">OKL</td>
+<td align="left">Russel Westbrook</td>
+<td align="right">2302</td>
+</tr>
+<tr class="odd">
+<td align="left">14</td>
+<td align="left">LAL</td>
+<td align="left">Wesley Johnson</td>
+<td align="right">2244</td>
+</tr>
+<tr class="even">
+<td align="left">20</td>
+<td align="left">NYK</td>
+<td align="left">Shane Larkin</td>
+<td align="right">1864</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2>各隊得分王</h2>
-<p>222</p>
+<p>首先將設MaxPoint為NBA1415中、每個Team裡面依照TotalPoints來排序為最高分的，</p>
+<p>再將NBA1415、MaxPoint合併成為一個新的表格NBA1415MaxPoint，</p>
+<p>print NBA1415MaxPoint，項目包含“Team”,“Name”,“TotalPoints”，</p>
+<p>並以TotalPoints由大而小排列，最後再用knitr製成表格。</p>
 <pre><code>MaxPoint=aggregate(TotalPoints~Team,NBA1415,max)
 NBA1415MaxPoint=merge(NBA1415,MaxPoint)
 print=NBA1415MaxPoint[order(NBA1415MaxPoint$TotalPoints,decreasing = T),c(&quot;Team&quot;,&quot;Name&quot;,&quot;TotalPoints&quot;)]
 library(knitr)
-kable(print, digits=2)</code></pre>
+kable(print, digits=2)
+</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Team</th>
+<th align="left">Name</th>
+<th align="right">TotalPoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">HOU</td>
+<td align="left">James Harden</td>
+<td align="right">2217</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">GSW</td>
+<td align="left">Stephen Curry</td>
+<td align="right">1900</td>
+</tr>
+<tr class="odd">
+<td align="left">21</td>
+<td align="left">OKL</td>
+<td align="left">Russel Westbrook</td>
+<td align="right">1886</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">CLE</td>
+<td align="left">Lebron James</td>
+<td align="right">1740</td>
+</tr>
+<tr class="odd">
+<td align="left">25</td>
+<td align="left">POR</td>
+<td align="left">Damian Lillard</td>
+<td align="right">1720</td>
+</tr>
+<tr class="even">
+<td align="left">19</td>
+<td align="left">NOR</td>
+<td align="left">Anthony Davis</td>
+<td align="right">1656</td>
+</tr>
+<tr class="odd">
+<td align="left">13</td>
+<td align="left">LAC</td>
+<td align="left">Chris Paul</td>
+<td align="right">1564</td>
+</tr>
+<tr class="even">
+<td align="left">7</td>
+<td align="left">DAL</td>
+<td align="left">Monta Ellis</td>
+<td align="right">1513</td>
+</tr>
+<tr class="odd">
+<td align="left">29</td>
+<td align="left">UTA</td>
+<td align="left">Gordon Hayward</td>
+<td align="right">1463</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">CHI</td>
+<td align="left">Pau Gasol</td>
+<td align="right">1446</td>
+</tr>
+<tr class="odd">
+<td align="left">26</td>
+<td align="left">SAC</td>
+<td align="left">Rudy Gay</td>
+<td align="right">1432</td>
+</tr>
+<tr class="even">
+<td align="left">22</td>
+<td align="left">ORL</td>
+<td align="left">Nikola Vucevic</td>
+<td align="right">1428</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">MEM</td>
+<td align="left">Marc Gasol</td>
+<td align="right">1413</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">MIN</td>
+<td align="left">Andrew Wiggins</td>
+<td align="right">1387</td>
+</tr>
+<tr class="odd">
+<td align="left">30</td>
+<td align="left">WAS</td>
+<td align="left">John Wall</td>
+<td align="right">1385</td>
+</tr>
+<tr class="even">
+<td align="left">24</td>
+<td align="left">PHO</td>
+<td align="left">Eric Bledsoe</td>
+<td align="right">1377</td>
+</tr>
+<tr class="odd">
+<td align="left">16</td>
+<td align="left">MIA</td>
+<td align="left">Dwyane Wade</td>
+<td align="right">1331</td>
+</tr>
+<tr class="even">
+<td align="left">28</td>
+<td align="left">TOR</td>
+<td align="left">Kyle Lowry</td>
+<td align="right">1244</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">BRO</td>
+<td align="left">Brook Lopez</td>
+<td align="right">1236</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">ATL</td>
+<td align="left">Paul Millsap</td>
+<td align="right">1218</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">DEN</td>
+<td align="left">Ty Lawson</td>
+<td align="right">1143</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="left">DET</td>
+<td align="left">Andre Drummond</td>
+<td align="right">1130</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">BOS</td>
+<td align="left">Isaiah Thomas</td>
+<td align="right">1101</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">CHA</td>
+<td align="left">Al Jefferson</td>
+<td align="right">1080</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">SAN</td>
+<td align="left">Tim Duncan</td>
+<td align="right">1070</td>
+</tr>
+<tr class="even">
+<td align="left">17</td>
+<td align="left">MIL</td>
+<td align="left">Khris Middleton</td>
+<td align="right">1055</td>
+</tr>
+<tr class="odd">
+<td align="left">20</td>
+<td align="left">NYK</td>
+<td align="left">Carmelo Anthony</td>
+<td align="right">966</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">IND</td>
+<td align="left">C.j. Miles</td>
+<td align="right">942</td>
+</tr>
+<tr class="odd">
+<td align="left">23</td>
+<td align="left">PHI</td>
+<td align="left">Robert Covington</td>
+<td align="right">927</td>
+</tr>
+<tr class="even">
+<td align="left">14</td>
+<td align="left">LAL</td>
+<td align="left">Jordan Hill</td>
+<td align="right">841</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2>各隊最有效率的球員</h2>
-<p>333</p>
+<p>首先存一個值在best，best=TotalPoints/TotalMinutesPlayed，</p>
+<p>再設Maxbest為NBA1415中、每個Team裡面依照best來排序為最高分的，</p>
+<p>接著把NBA1415、Maxbest合併成為一個新的表格NBA1415Maxbest，</p>
+<p>print NBA1415Maxbest，項目包含“Team”,“Name”,“best”，</p>
+<p>並以best由大而小排列，最後再用knitr製成表格。</p>
 <pre><code>NBA1415$best=NBA1415$TotalPoints/NBA1415$TotalMinutesPlayed
 Maxbest=aggregate(best~Team,NBA1415,max)
 NBA1415Maxbest=merge(NBA1415,Maxbest)
 print=NBA1415Maxbest[order(NBA1415Maxbest$best,decreasing = T),c(&quot;Team&quot;,&quot;Name&quot;,&quot;best&quot;)]
 library(knitr)
-kable(print, digits=2)</code></pre>
+kable(print, digits=4)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Team</th>
+<th align="left">Name</th>
+<th align="right">best</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">21</td>
+<td align="left">OKL</td>
+<td align="left">Russel Westbrook</td>
+<td align="right">0.8193</td>
+</tr>
+<tr class="even">
+<td align="left">11</td>
+<td align="left">HOU</td>
+<td align="left">James Harden</td>
+<td align="right">0.7442</td>
+</tr>
+<tr class="odd">
+<td align="left">10</td>
+<td align="left">GSW</td>
+<td align="left">Stephen Curry</td>
+<td align="right">0.7271</td>
+</tr>
+<tr class="even">
+<td align="left">26</td>
+<td align="left">SAC</td>
+<td align="left">Demarcus Cousins</td>
+<td align="right">0.7059</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="left">CLE</td>
+<td align="left">Lebron James</td>
+<td align="right">0.6968</td>
+</tr>
+<tr class="even">
+<td align="left">20</td>
+<td align="left">NYK</td>
+<td align="left">Carmelo Anthony</td>
+<td align="right">0.6755</td>
+</tr>
+<tr class="odd">
+<td align="left">16</td>
+<td align="left">MIA</td>
+<td align="left">Dwyane Wade</td>
+<td align="right">0.6743</td>
+</tr>
+<tr class="even">
+<td align="left">19</td>
+<td align="left">NOR</td>
+<td align="left">Anthony Davis</td>
+<td align="right">0.6732</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">MEM</td>
+<td align="left">Tyrus Thomas</td>
+<td align="right">0.6667</td>
+</tr>
+<tr class="even">
+<td align="left">25</td>
+<td align="left">POR</td>
+<td align="left">Lamarcu Aldridge</td>
+<td align="right">0.6607</td>
+</tr>
+<tr class="odd">
+<td align="left">14</td>
+<td align="left">LAL</td>
+<td align="left">Kobe Bryant</td>
+<td align="right">0.6484</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">BOS</td>
+<td align="left">Isaiah Thomas</td>
+<td align="right">0.6379</td>
+</tr>
+<tr class="odd">
+<td align="left">13</td>
+<td align="left">LAC</td>
+<td align="left">Blake Griffin</td>
+<td align="right">0.6240</td>
+</tr>
+<tr class="even">
+<td align="left">28</td>
+<td align="left">TOR</td>
+<td align="left">Louis Williams</td>
+<td align="right">0.6161</td>
+</tr>
+<tr class="odd">
+<td align="left">24</td>
+<td align="left">PHO</td>
+<td align="left">Gerald Green</td>
+<td align="right">0.6109</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">MIN</td>
+<td align="left">Kevin Martin</td>
+<td align="right">0.5994</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">DAL</td>
+<td align="left">Charl Villanueva</td>
+<td align="right">0.5944</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">CHI</td>
+<td align="left">Derrick Rose</td>
+<td align="right">0.5905</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">BRO</td>
+<td align="left">Brook Lopez</td>
+<td align="right">0.5875</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">IND</td>
+<td align="left">Paul George</td>
+<td align="right">0.5761</td>
+</tr>
+<tr class="odd">
+<td align="left">23</td>
+<td align="left">PHI</td>
+<td align="left">Tony Wroten</td>
+<td align="right">0.5671</td>
+</tr>
+<tr class="even">
+<td align="left">22</td>
+<td align="left">ORL</td>
+<td align="left">Nikola Vucevic</td>
+<td align="right">0.5649</td>
+</tr>
+<tr class="odd">
+<td align="left">29</td>
+<td align="left">UTA</td>
+<td align="left">Gordon Hayward</td>
+<td align="right">0.5588</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">CHA</td>
+<td align="left">Jannero Pargo</td>
+<td align="right">0.5541</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">DET</td>
+<td align="left">Brandon Jennings</td>
+<td align="right">0.5392</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">ATL</td>
+<td align="left">Jeff Teague</td>
+<td align="right">0.5208</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">SAN</td>
+<td align="left">Kawhi Leonard</td>
+<td align="right">0.5204</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">DEN</td>
+<td align="left">Danilo Gallinari</td>
+<td align="right">0.5165</td>
+</tr>
+<tr class="odd">
+<td align="left">17</td>
+<td align="left">MIL</td>
+<td align="left">Ersan Ilyasova</td>
+<td align="right">0.5072</td>
+</tr>
+<tr class="even">
+<td align="left">30</td>
+<td align="left">WAS</td>
+<td align="left">John Wall</td>
+<td align="right">0.4875</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2>各隊三分球出手最準的球員</h2>
-<p>444</p>
+<p>首先存一個值在good3，good3=ThreesMade/ThreesAttempted，</p>
+<p>再設Maxgood3為NBA1415中、每個Team裡面依照best來排序為最高分的，</p>
+<p>接著把NBA1415、Maxgood3合併成為一個新的表格NBA1415Maxgood3，</p>
+<p>print NBA1415Maxgood3，項目包含“Team”,“Name”,“good3”，</p>
+<p>並以good3由大而小排列，最後再用knitr製成表格。</p>
 <pre><code>NBA1415$good3=NBA1415$ThreesMade/NBA1415$ThreesAttempted
 Maxgood3=aggregate(good3~Team,NBA1415,max)
 NBA1415Maxgood3=merge(NBA1415,Maxgood3)
 print=NBA1415Maxgood3[order(NBA1415Maxgood3$good3,decreasing = T),c(&quot;Team&quot;,&quot;Name&quot;,&quot;good3&quot;)]
 library(knitr)
-kable(print, digits=2)</code></pre>
+kable(print, digits=4)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Team</th>
+<th align="left">Name</th>
+<th align="right">good3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">CHA</td>
+<td align="left">Cody Zeller</td>
+<td align="right">1.0000</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">MIL</td>
+<td align="left">John Henson</td>
+<td align="right">1.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">30</td>
+<td align="left">TOR</td>
+<td align="left">Bruno Caboclo</td>
+<td align="right">0.6667</td>
+</tr>
+<tr class="even">
+<td align="left">14</td>
+<td align="left">LAL</td>
+<td align="left">Dwight Buycks</td>
+<td align="right">0.6364</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">POR</td>
+<td align="left">Victor Claver</td>
+<td align="right">0.5455</td>
+</tr>
+<tr class="even">
+<td align="left">20</td>
+<td align="left">NOR</td>
+<td align="left">Luke Babbitt</td>
+<td align="right">0.5130</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">DEN</td>
+<td align="left">Jamaal Franklin</td>
+<td align="right">0.5000</td>
+</tr>
+<tr class="even">
+<td align="left">11</td>
+<td align="left">HOU</td>
+<td align="left">Dwight Howard</td>
+<td align="right">0.5000</td>
+</tr>
+<tr class="odd">
+<td align="left">13</td>
+<td align="left">LAC</td>
+<td align="left">Lester Hudson</td>
+<td align="right">0.5000</td>
+</tr>
+<tr class="even">
+<td align="left">25</td>
+<td align="left">PHO</td>
+<td align="left">Earl Barron</td>
+<td align="right">0.5000</td>
+</tr>
+<tr class="odd">
+<td align="left">26</td>
+<td align="left">PHO</td>
+<td align="left">Jerel Mcneal</td>
+<td align="right">0.5000</td>
+</tr>
+<tr class="even">
+<td align="left">28</td>
+<td align="left">SAC</td>
+<td align="left">David Stockton</td>
+<td align="right">0.5000</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">ATL</td>
+<td align="left">Kyle Korver</td>
+<td align="right">0.4933</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="left">DET</td>
+<td align="left">Tayshaun Prince</td>
+<td align="right">0.4627</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">CHI</td>
+<td align="left">Pau Gasol</td>
+<td align="right">0.4615</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">BOS</td>
+<td align="left">Luigi Datome</td>
+<td align="right">0.4500</td>
+</tr>
+<tr class="odd">
+<td align="left">10</td>
+<td align="left">GSW</td>
+<td align="left">Stephen Curry</td>
+<td align="right">0.4427</td>
+</tr>
+<tr class="even">
+<td align="left">22</td>
+<td align="left">OKL</td>
+<td align="left">Anthony Morrow</td>
+<td align="right">0.4338</td>
+</tr>
+<tr class="odd">
+<td align="left">17</td>
+<td align="left">MIA</td>
+<td align="left">Shannon Brown</td>
+<td align="right">0.4286</td>
+</tr>
+<tr class="even">
+<td align="left">29</td>
+<td align="left">SAN</td>
+<td align="left">Tony Parker</td>
+<td align="right">0.4270</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">DAL</td>
+<td align="left">Richar Jefferson</td>
+<td align="right">0.4258</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">CLE</td>
+<td align="left">Kyrie Irving</td>
+<td align="right">0.4155</td>
+</tr>
+<tr class="odd">
+<td align="left">21</td>
+<td align="left">NYK</td>
+<td align="left">Jose Calderon</td>
+<td align="right">0.4155</td>
+</tr>
+<tr class="even">
+<td align="left">32</td>
+<td align="left">WAS</td>
+<td align="left">Bradley Beal</td>
+<td align="right">0.4093</td>
+</tr>
+<tr class="odd">
+<td align="left">12</td>
+<td align="left">IND</td>
+<td align="left">Paul George</td>
+<td align="right">0.4091</td>
+</tr>
+<tr class="even">
+<td align="left">24</td>
+<td align="left">PHI</td>
+<td align="left">Hollis Thompson</td>
+<td align="right">0.4007</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">MEM</td>
+<td align="left">Jordan Adams</td>
+<td align="right">0.4000</td>
+</tr>
+<tr class="even">
+<td align="left">16</td>
+<td align="left">MEM</td>
+<td align="left">Courtney Lee</td>
+<td align="right">0.4000</td>
+</tr>
+<tr class="odd">
+<td align="left">31</td>
+<td align="left">UTA</td>
+<td align="left">Jeremy Evans</td>
+<td align="right">0.4000</td>
+</tr>
+<tr class="even">
+<td align="left">23</td>
+<td align="left">ORL</td>
+<td align="left">Channing Frye</td>
+<td align="right">0.3931</td>
+</tr>
+<tr class="odd">
+<td align="left">19</td>
+<td align="left">MIN</td>
+<td align="left">Shabazz Muhammad</td>
+<td align="right">0.3922</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">BRO</td>
+<td align="left">Deron Williams</td>
+<td align="right">0.3671</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
