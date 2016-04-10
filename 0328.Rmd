@@ -5,6 +5,11 @@ output: github_document
 
 
 ##讀取柯文哲粉絲團資料
+先安裝Rfacebook的packages，放入library。
+
+接著放入自己的token，開始將柯P從2016-01-01到今天2016-04-10的所有文章都加進totalPage中裡面。
+
+for迴圈中是先暫存每五天的文章在tempPage中，再個別放到totalpage中統一彙整，算出總文章數~
 ```
 install.packages("Rfacebook")
 library(Rfacebook)
@@ -22,10 +27,15 @@ for(i in 1:(length(DateVectorStr)-1)){
 }
 nrow(totalPage)
 ```
+討論：
+
 截至2016/01/01至2016/04/10柯P粉絲團一共有57篇文章
 
 
 ##每日發文數分析
+分析柯P粉絲團每天的發文數，由於FB日期格式比較SPECIAL，所以要先將其轉換為台灣時區，
+
+然後幫她取一些比較方便的名字"PostDateTPE"(發文日期),"datetime"(發文時間),"weekdays"(發文星期幾)
 ```
 totalPage$datetime = as.POSIXct(totalPage$created_time,format = "%Y-%m-%dT%H:%M:%S+0000",tz = "GMT") #2016-01-16T15:05:36+0000
 totalPage$PostDateTPE = format(totalPage$datetime, "%Y-%m-%d",tz = "Asia/Taipei") #2016-01-16
@@ -47,6 +57,8 @@ kable(head(PostCount[order(PostCount$Posts,decreasing = T),],10))
 |3  |2016-01-06  |     1|
 |4  |2016-01-07  |     1|
 |8  |2016-01-12  |     1|
+討論：
+
 由上統計表得知，0109.0108.0110為前三多發文的日期，
 
 這三個日期相近想必那幾天柯P一定做了甚麼有趣的事情，
@@ -64,6 +76,13 @@ kable(head(PostCount[order(PostCount$Posts,decreasing = T),],10))
 
 
 ##每日likes數分析
+因為柯P一天可能發表很多長篇大論所以我們先用likes算出讚數平均然後存進去
+
+再用For迴圈將平均讚數放進每一列中，並把所有資料存進totalPageLikes。
+
+最後以平均讚數為排列順，並由小到大，但因為同一天發的三篇文章平均下來的讚數一定三篇都一樣，
+
+所以將三篇文章排在一起(Likes_Analysis)並顯示"發文日期","發文內容","平均讚數","各有讚數"。
 ````
 likes = aggregate(likes_count~PostDateTPE,totalPage,mean)
 for(i in 1:nrow(PostCount)){
@@ -91,6 +110,8 @@ kable(head(Likes_Analysis[order(Likes_Analysis$likes_count.y, decreasing = T), c
 |10 |         95130|2016-01-09  |
 |30 |         70153|2016-02-06  |
 |31 |         70153|2016-02-06  |
+討論：
+
 0116當天這麼多讚數，不用想也能猜到那天一定是跟總統大選有關的文章，
 
 0228則是柯P選擇以騎單車拚520公里方式來紀念228並發表了一篇感人肺腑的PO文，
@@ -100,6 +121,13 @@ kable(head(Likes_Analysis[order(Likes_Analysis$likes_count.y, decreasing = T), c
 
 
 ##每日comments數分析
+因為柯P一天可能發表很多長篇大論所以我們先用comments算出留言數平均然後存進去
+
+再用For迴圈將平均留言數放進每一列中，並把所有資料存進totalPagecomments。
+
+最後以平均留言數為排列順，並由小到大，但因為同一天發的三篇文章平均下來的留言數一定三篇都一樣，
+
+所以將三篇文章排在一起(Comments_Analysis)並顯示"發文日期","發文內容","平均留言數","各有留言數"。
 ```
 comments = aggregate(comments_count~PostDateTPE,totalPage,mean)
 for(i in 1:nrow(PostCount)){
@@ -127,6 +155,8 @@ kable(head(Comments_Analysis[order(Comments_Analysis$comments_count.y, decreasin
 |55 |          1550.00|2016-03-29  |
 |2  |          1434.00|2016-01-05  |
 |56 |          1415.00|2016-03-31  |
+討論：
+
 非常明顯的，前六名留言數都在0109-0110阿阿~
 
 沒錯根據上面幾題種種分析後，這兩天就是柯P一日雙城那兩天啊~
@@ -135,6 +165,13 @@ kable(head(Comments_Analysis[order(Comments_Analysis$comments_count.y, decreasin
 
 
 ##每日shares數分析
+因為柯P一天可能發表很多長篇大論所以我們先用shares算出分享數平均然後存進去
+
+再用For迴圈將平均分享數放進每一列中，並把所有資料存進totalPageshares。
+
+最後以平均分享數為排列順，並由小到大，但因為同一天發的三篇文章平均下來的分享數一定三篇都一樣，
+
+所以將三篇文章排在一起(Shares_Analysis)並顯示"發文日期","發文內容","平均分享數","各有分享數"。
 ```
 shares = aggregate(shares_count~PostDateTPE,totalPage,mean)
 for(i in 1:nrow(PostCount)){
@@ -162,6 +199,8 @@ kable(head(Shares_Analysis[order(Shares_Analysis$shares_count.y,decreasing = T),
 |10 |         2359.0|2016-01-09  |
 |15 |         2073.0|2016-01-15  |
 |38 |         1416.0|2016-02-27  |
+討論：
+
 0114這個不是很重要的日子為甚麼分享數這麼的高呢?!
 
 實際去柯P的粉絲專業一查之下發現這篇文章是柯P對於夢想很感人的一翻肺腑之言，
