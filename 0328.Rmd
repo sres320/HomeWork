@@ -33,7 +33,7 @@ totalPage$weekdays = weekdays(as.Date(totalPage$PostDateTPE))
 Posts = totalPage$id
 PostCount = aggregate(Posts~PostDateTPE,totalPage,length)
 library(knitr)
-kable(head(PostCount[order(PostCount$Posts,decreasing = T),],15))
+kable(head(PostCount[order(PostCount$Posts,decreasing = T),],10))
 ```
 |   |PostDateTPE | Posts|
 |:--|:-----------|-----:|
@@ -47,14 +47,23 @@ kable(head(PostCount[order(PostCount$Posts,decreasing = T),],15))
 |3  |2016-01-06  |     1|
 |4  |2016-01-07  |     1|
 |8  |2016-01-12  |     1|
-|9  |2016-01-14  |     1|
-|10 |2016-01-15  |     1|
-|11 |2016-01-16  |     1|
-|12 |2016-01-20  |     1|
-|13 |2016-01-21  |     1|
+由上統計表得知，0109.0108.0110為前三多發文的日期，
+
+這三個日期相近想必那幾天柯P一定做了甚麼有趣的事情，
+
+上粉絲專業查詢後得知，果不其然就是那天柯P勇猛的騎腳踏車南下阿阿~
+
+柯P一路從0109清晨五點南下咻咻咻在19小時後，
+
+也就是1010的凌晨約莫00:42來到高雄又發了兩篇文，
+
+而在出發前的0108兩篇文章一篇是關於「一日北高，雙城挑戰」，
+
+另一篇則是關於臺北市政府105年度總預算。
 
 
-#每日likes數分析
+
+##每日likes數分析
 ````
 likes = aggregate(likes_count~PostDateTPE,totalPage,mean)
 for(i in 1:nrow(PostCount)){
@@ -82,9 +91,15 @@ kable(head(Likes_Analysis[order(Likes_Analysis$likes_count.y, decreasing = T), c
 |10 |         95130|2016-01-09  |
 |30 |         70153|2016-02-06  |
 |31 |         70153|2016-02-06  |
+0116當天這麼多讚數，不用想也能猜到那天一定是跟總統大選有關的文章，
+
+0228則是柯P選擇以騎單車拚520公里方式來紀念228並發表了一篇感人肺腑的PO文，
+
+1010兩篇文一篇是「一日雙城」剛抵達高雄時的直播，另一則是大合照。
 
 
-#每日comments數分析
+
+##每日comments數分析
 ```
 comments = aggregate(comments_count~PostDateTPE,totalPage,mean)
 for(i in 1:nrow(PostCount)){
@@ -112,9 +127,14 @@ kable(head(Comments_Analysis[order(Comments_Analysis$comments_count.y, decreasin
 |55 |          1550.00|2016-03-29  |
 |2  |          1434.00|2016-01-05  |
 |56 |          1415.00|2016-03-31  |
+非常明顯的，前六名留言數都在0109-0110阿阿~
+
+沒錯根據上面幾題種種分析後，這兩天就是柯P一日雙城那兩天啊~
+
+大家自然對柯P如此狂的行徑進行許多的討論，所以討論數居高不下。
 
 
-#每日shares數分析
+##每日shares數分析
 ```
 shares = aggregate(shares_count~PostDateTPE,totalPage,mean)
 for(i in 1:nrow(PostCount)){
@@ -142,6 +162,18 @@ kable(head(Shares_Analysis[order(Shares_Analysis$shares_count.y,decreasing = T),
 |10 |         2359.0|2016-01-09  |
 |15 |         2073.0|2016-01-15  |
 |38 |         1416.0|2016-02-27  |
+0114這個不是很重要的日子為甚麼分享數這麼的高呢?!
+
+實際去柯P的粉絲專業一查之下發現這篇文章是柯P對於夢想很感人的一翻肺腑之言，
+
+分享者大多是推崇這種敢做夢的精神，且無關任何政治，
+
+因此受到許多粉絲的廣大分享。
+
+0110就不必多說了跟上題一樣是關於柯P勇猛騎腳踏車的事蹟；
+
+0228則是粉絲表達228對台灣造成的傷痛等等的引用文章。
+
 
 
 
