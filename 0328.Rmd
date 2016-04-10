@@ -1,0 +1,149 @@
+---
+title: "Facebook粉絲團分析：柯Ｐ"
+output: github_document
+---
+
+
+##讀取柯文哲粉絲團資料
+```
+install.packages("Rfacebook")
+library(Rfacebook)
+token = "CAACEdEose0cBAJNmw7cEpCtNs3HZCQovhQmkX0WrA3sKKYRdFieS6epMa2sAwCSZBp2FAoFuAXijyaTwfx15UPYSg9M0sfMMHcfDaLx75kr7EDct1PyM9AMqVZCQZAo6fFiN0mpinnYPNMFYZCiULITjV3x4ggjr1eJCfQsdwDoujWHbq6rKPEPPus8PRQcWZBZCXvetn7UUgUiHaBwAoaO"
+FBData = GET (paste0 ("https://graph.facebook.com/v2.5/DoctorKoWJ?fields=posts%7Blikes%2Ccomments%2Cshares%7D&access_token=",token))
+names(FBData)
+```
+```
+totalPage = NULL
+lastDate = Sys.Date()
+DateVectorStr = as.character(seq(as.Date("2016-01-01"),lastDate,by="5 days"))
+for(i in 1:(length(DateVectorStr)-1)){
+  tempPage = getPage("DoctorKoWJ",token,since = DateVectorStr[i],until = DateVectorStr[i+1])
+  totalPage = rbind(totalPage,tempPage)
+}
+nrow(totalPage)
+```
+截至2016/01/01至2016/04/10柯P粉絲團一共有57篇文章
+
+
+##每日發文數分析
+```
+totalPage$datetime = as.POSIXct(totalPage$created_time,format = "%Y-%m-%dT%H:%M:%S+0000",tz = "GMT") #2016-01-16T15:05:36+0000
+totalPage$PostDateTPE = format(totalPage$datetime, "%Y-%m-%d",tz = "Asia/Taipei") #2016-01-16
+totalPage$weekdays = weekdays(as.Date(totalPage$PostDateTPE))
+Posts = totalPage$id
+PostCount = aggregate(Posts~PostDateTPE,totalPage,length)
+library(knitr)
+kable(head(PostCount[order(PostCount$Posts,decreasing = T),],15))
+```
+|   |PostDateTPE | Posts|
+|:--|:-----------|-----:|
+|6  |2016-01-09  |     4|
+|5  |2016-01-08  |     2|
+|7  |2016-01-10  |     2|
+|25 |2016-02-06  |     2|
+|44 |2016-03-22  |     2|
+|1  |2016-01-01  |     1|
+|2  |2016-01-05  |     1|
+|3  |2016-01-06  |     1|
+|4  |2016-01-07  |     1|
+|8  |2016-01-12  |     1|
+|9  |2016-01-14  |     1|
+|10 |2016-01-15  |     1|
+|11 |2016-01-16  |     1|
+|12 |2016-01-20  |     1|
+|13 |2016-01-21  |     1|
+
+
+#每日likes數分析
+````
+likes = aggregate(likes_count~PostDateTPE,totalPage,mean)
+for(i in 1:nrow(PostCount)){
+  for(j in PostCount$Posts){
+    totalPageLikes = merge(totalPage,likes,by = "PostDateTPE")
+  }
+}
+Likes_Analysis = totalPageLikes[order(totalPageLikes$likes_count.y, decreasing = T), c("PostDateTPE","message","likes_count.y","likes_count.x")]
+kable(head(Likes_Analysis[order(Likes_Analysis$likes_count.y, decreasing = T), c("likes_count.y","PostDateTPE")],15))
+```
+|   | likes_count.y|PostDateTPE |
+|:--|-------------:|:-----------|
+|16 |        329087|2016-01-16  |
+|39 |        228900|2016-02-28  |
+|11 |        223666|2016-01-10  |
+|12 |        223666|2016-01-10  |
+|14 |        187448|2016-01-14  |
+|38 |        180919|2016-02-27  |
+|54 |        139062|2016-03-28  |
+|15 |        128671|2016-01-15  |
+|33 |        128019|2016-02-13  |
+|7  |         95130|2016-01-09  |
+|8  |         95130|2016-01-09  |
+|9  |         95130|2016-01-09  |
+|10 |         95130|2016-01-09  |
+|30 |         70153|2016-02-06  |
+|31 |         70153|2016-02-06  |
+
+
+#每日comments數分析
+```
+comments = aggregate(comments_count~PostDateTPE,totalPage,mean)
+for(i in 1:nrow(PostCount)){
+  for(j in PostCount$Posts){
+    totalPagecomments = merge(totalPage, comments, by = "PostDateTPE")
+  }
+}
+Comments_Analysis = totalPagecomments[order(totalPagecomments$comments_count.y, decreasing = T),c("PostDateTPE","message","comments_count.y","comments_count.x")]
+kable(head(Comments_Analysis[order(Comments_Analysis$comments_count.y, decreasing = T),c("comments_count.y","PostDateTPE")],15))
+```
+|   | comments_count.y|PostDateTPE |
+|:--|----------------:|:-----------|
+|11 |          5981.50|2016-01-10  |
+|12 |          5981.50|2016-01-10  |
+|7  |          5153.25|2016-01-09  |
+|8  |          5153.25|2016-01-09  |
+|9  |          5153.25|2016-01-09  |
+|10 |          5153.25|2016-01-09  |
+|54 |          5103.00|2016-03-28  |
+|39 |          3565.00|2016-02-28  |
+|38 |          3268.00|2016-02-27  |
+|14 |          2848.00|2016-01-14  |
+|16 |          2439.00|2016-01-16  |
+|33 |          2159.00|2016-02-13  |
+|55 |          1550.00|2016-03-29  |
+|2  |          1434.00|2016-01-05  |
+|56 |          1415.00|2016-03-31  |
+
+
+#每日shares數分析
+```
+shares = aggregate(shares_count~PostDateTPE,totalPage,mean)
+for(i in 1:nrow(PostCount)){
+  for(j in PostCount$Posts){
+    totalPageshares = merge(totalPage,shares,by = "PostDateTPE")
+  }
+}
+Shares_Analysis = totalPageshares[order(totalPageshares$shares_count.y, decreasing = T),c("PostDateTPE","message","shares_count.y","shares_count.x")]
+kable(head(Shares_Analysis[order(Shares_Analysis$shares_count.y,decreasing = T),c("shares_count.y","PostDateTPE")],15))
+```
+|   | shares_count.y|PostDateTPE |
+|:--|--------------:|:-----------|
+|14 |        34777.0|2016-01-14  |
+|11 |        16407.5|2016-01-10  |
+|12 |        16407.5|2016-01-10  |
+|39 |        11236.0|2016-02-28  |
+|41 |         5334.0|2016-03-04  |
+|54 |         4968.0|2016-03-28  |
+|16 |         4897.0|2016-01-16  |
+|2  |         2570.0|2016-01-05  |
+|33 |         2456.0|2016-02-13  |
+|7  |         2359.0|2016-01-09  |
+|8  |         2359.0|2016-01-09  |
+|9  |         2359.0|2016-01-09  |
+|10 |         2359.0|2016-01-09  |
+|15 |         2073.0|2016-01-15  |
+|38 |         1416.0|2016-02-27  |
+
+
+
+
+
