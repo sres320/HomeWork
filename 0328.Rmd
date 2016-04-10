@@ -218,7 +218,7 @@ kable(head(Shares_Analysis[order(Shares_Analysis$shares_count.y,decreasing = T),
 
 
 ##だ肈
-#Comments跋丁ず痙ē繵瞯(痙ē计/祇ゅ计,だ肈)
+Comments跋丁ず痙ē繵瞯(痙ē计/祇ゅ计,だ肈)
 ```
 id = totalPage$id#post_id
 getPost(id,token,n.comments=xxx)
