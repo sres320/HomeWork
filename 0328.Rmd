@@ -1,15 +1,15 @@
 ---
-title: "Facebook�����Τ��R�G�_��"
+title: "Facebook粉絲團分析：柯Ｐ"
 output: github_document
 ---
 
 
-##Ū���_��������θ��
-���w��Rfacebook��packages�A��Jlibrary�C
+##讀取柯文哲粉絲團資料
+先安裝Rfacebook的packages，放入library。
 
-���۩�J�ۤv��token�A�}�l�N�_P�q2016-01-01�줵��2016-04-10���Ҧ��峹���[�itotalPage���̭��C
+接著放入自己的token，開始將柯P從2016-01-01到今天2016-04-10的所有文章都加進totalPage中裡面。
 
-for�j�餤�O���Ȧs�C���Ѫ��峹�btempPage���A�A�ӧO���totalpage���Τ@�J��A��X�`�峹��~
+for迴圈中是先暫存每五天的文章在tempPage中，再個別放到totalpage中統一彙整，算出總文章數~
 ```
 install.packages("Rfacebook")
 library(Rfacebook)
@@ -27,16 +27,16 @@ for(i in 1:(length(DateVectorStr)-1)){
 }
 nrow(totalPage)
 ```
-�Q�סG
+討論：
 
-�I��2016/01/01��2016/04/10�_P�����Τ@�@��57�g�峹
+截至2016/01/01至2016/04/10柯P粉絲團一共有57篇文章
 
 
 
-##�C��o��Ƥ��R
-���R�_P�����ΨC�Ѫ��o��ơA�ѩ�FB����榡���SPECIAL�A�ҥH�n���N���ഫ���x�W�ɰϡA
+##每日發文數分析
+分析柯P粉絲團每天的發文數，由於FB日期格式比較SPECIAL，所以要先將其轉換為台灣時區，
 
-�M�����o���@�Ǥ����K���W�r"PostDateTPE"(�o����),"datetime"(�o��ɶ�),"weekdays"(�o��P���X)
+然後幫她取一些比較方便的名字"PostDateTPE"(發文日期),"datetime"(發文時間),"weekdays"(發文星期幾)
 ```
 totalPage$datetime = as.POSIXct(totalPage$created_time,format = "%Y-%m-%dT%H:%M:%S+0000",tz = "GMT") #2016-01-16T15:05:36+0000
 totalPage$PostDateTPE = format(totalPage$datetime, "%Y-%m-%d",tz = "Asia/Taipei") #2016-01-16
@@ -58,32 +58,32 @@ kable(head(PostCount[order(PostCount$Posts,decreasing = T),],10))
 |3  |2016-01-06  |     1|
 |4  |2016-01-07  |     1|
 |8  |2016-01-12  |     1|
-�Q�סG
+討論：
 
-�ѤW�έp���o���A0109.0108.0110���e�T�h�o�媺����A
+由上統計表得知，0109.0108.0110為前三多發文的日期，
 
-�o�T�Ӥ���۪�Q�����X�Ѭ_P�@�w���F�ƻ򦳽쪺�Ʊ��A
+這三個日期相近想必那幾天柯P一定做了甚麼有趣的事情，
 
-�W�����M�~�d�߫�o���A�G����M�N�O���Ѭ_P�i�r���M�}�񨮫n�U����~
+上粉絲專業查詢後得知，果不其然就是那天柯P勇猛的騎腳踏車南下阿阿~
 
-�_P�@���q0109�M�᤭�I�n�U�������b19�p�ɫ�A
+柯P一路從0109清晨五點南下咻咻咻在19小時後，
 
-�]�N�O1010��������00:42�Ө찪���S�o�F��g��A
+也就是1010的凌晨約莫00:42來到高雄又發了兩篇文，
 
-�Ӧb�X�o�e��0108��g�峹�@�g�O����u�@��_���A�����D�ԡv�A
+而在出發前的0108兩篇文章一篇是關於「一日北高，雙城挑戰」，
 
-�t�@�g�h�O����O�_���F��105�~���`�w��C
+另一篇則是關於臺北市政府105年度總預算。
 
 
 
-##�C��likes�Ƥ��R
-�]���_P�@�ѥi��o���ܦh���g�j�שҥH�ڭ̥���likes��X�g�ƥ����M��s�i�h
+##每日likes數分析
+因為柯P一天可能發表很多長篇大論所以我們先用likes算出讚數平均然後存進去
 
-�A��For�j��N�����g�Ʃ�i�C�@�C���A�ç�Ҧ���Ʀs�itotalPageLikes�C
+再用For迴圈將平均讚數放進每一列中，並把所有資料存進totalPageLikes。
 
-�̫�H�����g�Ƭ��ƦC���A�åѤp��j�A���]���P�@�ѵo���T�g�峹�����U�Ӫ��g�Ƥ@�w�T�g���@�ˡA
+最後以平均讚數為排列順，並由小到大，但因為同一天發的三篇文章平均下來的讚數一定三篇都一樣，
 
-�ҥH�N�T�g�峹�Ʀb�@�_(Likes_Analysis)�����"�o����","�o�夺�e","�����g��","�U���g��"�C
+所以將三篇文章排在一起(Likes_Analysis)並顯示"發文日期","發文內容","平均讚數","各有讚數"。
 ````
 likes = aggregate(likes_count~PostDateTPE,totalPage,mean)
 for(i in 1:nrow(PostCount)){
@@ -111,24 +111,24 @@ kable(head(Likes_Analysis[order(Likes_Analysis$likes_count.y, decreasing = T), c
 |10 |         95130|2016-01-09  |
 |30 |         70153|2016-02-06  |
 |31 |         70153|2016-02-06  |
-�Q�סG
+討論：
 
-0116���ѳo��h�g�ơA���ηQ�]��q�쨺�Ѥ@�w�O���`�Τj�靈�����峹�A
+0116當天這麼多讚數，不用想也能猜到那天一定是跟總統大選有關的文章，
 
-0228�h�O�_P��ܥH�M�樮��520�����覡�Ӭ���228�õo���F�@�g�P�H�͵ƪ�PO��A
+0228則是柯P選擇以騎單車拚520公里方式來紀念228並發表了一篇感人肺腑的PO文，
 
-1010��g��@�g�O�u�@�������v���F�����ɪ������A�t�@�h�O�j�X�ӡC
+1010兩篇文一篇是「一日雙城」剛抵達高雄時的直播，另一則是大合照。
 
 
 
-##�C��comments�Ƥ��R
-�]���_P�@�ѥi��o���ܦh���g�j�שҥH�ڭ̥���comments��X�d���ƥ����M��s�i�h
+##每日comments數分析
+因為柯P一天可能發表很多長篇大論所以我們先用comments算出留言數平均然後存進去
 
-�A��For�j��N�����d���Ʃ�i�C�@�C���A�ç�Ҧ���Ʀs�itotalPagecomments�C
+再用For迴圈將平均留言數放進每一列中，並把所有資料存進totalPagecomments。
 
-�̫�H�����d���Ƭ��ƦC���A�åѤp��j�A���]���P�@�ѵo���T�g�峹�����U�Ӫ��d���Ƥ@�w�T�g���@�ˡA
+最後以平均留言數為排列順，並由小到大，但因為同一天發的三篇文章平均下來的留言數一定三篇都一樣，
 
-�ҥH�N�T�g�峹�Ʀb�@�_(Comments_Analysis)�����"�o����","�o�夺�e","�����d����","�U���d����"�C
+所以將三篇文章排在一起(Comments_Analysis)並顯示"發文日期","發文內容","平均留言數","各有留言數"。
 ```
 comments = aggregate(comments_count~PostDateTPE,totalPage,mean)
 for(i in 1:nrow(PostCount)){
@@ -156,24 +156,24 @@ kable(head(Comments_Analysis[order(Comments_Analysis$comments_count.y, decreasin
 |55 |          1550.00|2016-03-29  |
 |2  |          1434.00|2016-01-05  |
 |56 |          1415.00|2016-03-31  |
-�Q�סG
+討論：
 
-�D�`���㪺�A�e���W�d���Ƴ��b0109-0110����~
+非常明顯的，前六名留言數都在0109-0110阿阿~
 
-�S���ھڤW���X�D�غؤ��R��A�o��ѴN�O�_P�@����������Ѱ�~
+沒錯根據上面幾題種種分析後，這兩天就是柯P一日雙城那兩天啊~
 
-�j�a�۵M��_P�p���g����|�i��\�h���Q�סA�ҥH�Q�׼Ʃ~�����U�C
+大家自然對柯P如此狂的行徑進行許多的討論，所以討論數居高不下。
 
 
 
-##�C��shares�Ƥ��R
-�]���_P�@�ѥi��o���ܦh���g�j�שҥH�ڭ̥���shares��X���ɼƥ����M��s�i�h
+##每日shares數分析
+因為柯P一天可能發表很多長篇大論所以我們先用shares算出分享數平均然後存進去
 
-�A��For�j��N�������ɼƩ�i�C�@�C���A�ç�Ҧ���Ʀs�itotalPageshares�C
+再用For迴圈將平均分享數放進每一列中，並把所有資料存進totalPageshares。
 
-�̫�H�������ɼƬ��ƦC���A�åѤp��j�A���]���P�@�ѵo���T�g�峹�����U�Ӫ����ɼƤ@�w�T�g���@�ˡA
+最後以平均分享數為排列順，並由小到大，但因為同一天發的三篇文章平均下來的分享數一定三篇都一樣，
 
-�ҥH�N�T�g�峹�Ʀb�@�_(Shares_Analysis)�����"�o����","�o�夺�e","�������ɼ�","�U�����ɼ�"�C
+所以將三篇文章排在一起(Shares_Analysis)並顯示"發文日期","發文內容","平均分享數","各有分享數"。
 ```
 shares = aggregate(shares_count~PostDateTPE,totalPage,mean)
 for(i in 1:nrow(PostCount)){
@@ -201,24 +201,29 @@ kable(head(Shares_Analysis[order(Shares_Analysis$shares_count.y,decreasing = T),
 |10 |         2359.0|2016-01-09  |
 |15 |         2073.0|2016-01-15  |
 |38 |         1416.0|2016-02-27  |
-�Q�סG
+討論：
 
-0114�o�Ӥ��O�ܭ��n����l���ƻ���ɼƳo�򪺰��O?!
+0114這個不是很重要的日子為甚麼分享數這麼的高呢?!
 
-��ڥh�_P�������M�~�@�d���U�o�{�o�g�峹�O�_P���ڷQ�ܷP�H���@½�͵Ƥ����A
+實際去柯P的粉絲專業一查之下發現這篇文章是柯P對於夢想很感人的一翻肺腑之言，
 
-���ɪ̤j�h�O���R�o�ش����ڪ��믫�A�B�L������F�v�A
+分享者大多是推崇這種敢做夢的精神，且無關任何政治，
 
-�]������\�h�������s�j���ɡC
+因此受到許多粉絲的廣大分享。
 
-0110�N�����h���F��W�D�@�ˬO����_P�i�r�M�}�񨮪����ݡF
+0110就不必多說了跟上題一樣是關於柯P勇猛騎腳踏車的事蹟；
 
-0228�h�O�������F228��x�W�y�����˵h�������ޥΤ峹�C
+0228則是粉絲表達228對台灣造成的傷痛等等的引用文章。
 
 
 
+<<<<<<< HEAD
 ##�[���D
 Comments���H�b�϶������d���W�v(�d����/�o���,�[���D)
+=======
+##加分題
+##Comments的人在區間內的留言頻率(留言數/發文數,加分題)
+>>>>>>> origin/master
 ```
 id = totalPage$id#post_id
 getPost(id,token,n.comments=xxx)
