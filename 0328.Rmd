@@ -32,6 +32,7 @@ nrow(totalPage)
 截至2016/01/01至2016/04/10柯P粉絲團一共有57篇文章
 
 
+
 ##每日發文數分析
 分析柯P粉絲團每天的發文數，由於FB日期格式比較SPECIAL，所以要先將其轉換為台灣時區，
 
@@ -164,6 +165,7 @@ kable(head(Comments_Analysis[order(Comments_Analysis$comments_count.y, decreasin
 大家自然對柯P如此狂的行徑進行許多的討論，所以討論數居高不下。
 
 
+
 ##每日shares數分析
 因為柯P一天可能發表很多長篇大論所以我們先用shares算出分享數平均然後存進去
 
@@ -215,6 +217,10 @@ kable(head(Shares_Analysis[order(Shares_Analysis$shares_count.y,decreasing = T),
 
 
 
-
+##加分題
+#Comments的人在區間內的留言頻率(留言數/發文數,加分題)
+```
+id = totalPage$id#post_id
+getPost(id,token,n.comments=xxx)
 
 
