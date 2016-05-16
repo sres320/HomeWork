@@ -13,7 +13,7 @@ for迴圈中是先暫存每五天的文章在tempPage中，再個別放到totalpage中統一彙整，算出總
 ```
 install.packages("Rfacebook")
 library(Rfacebook)
-token = "CAACEdEose0cBAJNmw7cEpCtNs3HZCQovhQmkX0WrA3sKKYRdFieS6epMa2sAwCSZBp2FAoFuAXijyaTwfx15UPYSg9M0sfMMHcfDaLx75kr7EDct1PyM9AMqVZCQZAo6fFiN0mpinnYPNMFYZCiULITjV3x4ggjr1eJCfQsdwDoujWHbq6rKPEPPus8PRQcWZBZCXvetn7UUgUiHaBwAoaO"
+token = "CAACEdEose0cBAHo4pYpxrkak8Wy3eiFD7dY6tcZB1RnF69uEQBavRoTK79PsJMYxw2FA4GKld0XwSX2BGZC9lBQOmZB8EaERvUZCTOuhOCgj6AWlZBViSjGDwOZAHx8eaEzdBzPbnVqKf0QqPPKrevekMcJQYx16e0yGr5rdgKYuwpBgiWML2xdfHVdRZCZA1DdgsEj2ziuH0ZCsWYyxXahsS"
 FBData = GET (paste0 ("https://graph.facebook.com/v2.5/DoctorKoWJ?fields=posts%7Blikes%2Ccomments%2Cshares%7D&access_token=",token))
 names(FBData)
 ```
@@ -219,6 +219,23 @@ kable(head(Shares_Analysis[order(Shares_Analysis$shares_count.y,decreasing = T),
 
 ##加分題
 Comments的人在區間內的留言頻率(留言數/發文數,加分題)
-```
-id = totalPage$id#post_id
-getPost(id,token,n.comments=xxx)
+
+totalComment = NULL
+for(i in 1:10){ ###會跑很久.....建議先跑十筆就好for(i in 1:nrow(totalPage))
+    post = getPost(totalPage$id[i],token,n.comments = totalPage$comments_count)
+    tempComment = cbind(post$post$id,post$comments$from_name)
+    totalComment = rbind(totalComment,tempComment)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
