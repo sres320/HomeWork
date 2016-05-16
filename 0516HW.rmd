@@ -39,7 +39,7 @@ head(polio.sumYear)
 ```
 
 
-##視覺畫呈現
+##視覺化呈現
 
 ###先下載ggplot2才可以用
 ```
