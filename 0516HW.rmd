@@ -24,7 +24,9 @@ polio.m = melt(polio,id.vars=c('YEAR','WEEK'),stringsAsFactors=F)
 head(polio.m)
 ```
 ###處理缺值
-處理缺值,將"-"轉為NA，將value欄位轉為數值。
+處理缺值,將"-"轉為NA，將value欄位轉為數值。。
+
+(因為一些讀資料方面的問題，所以要用as.character()先轉一次值)
 ```
 polio.m[polio.m$value == "-",]$value = NA                     
 polio.m$value = as.numeric(as.character(polio.m$value))    
@@ -49,7 +51,7 @@ library(ggplot2)
 
 因為它包含X.Y軸，並且可以在相對應的空格填上顏色做第三種註記，
 
-就是各州各年分加總，我以紫色作為註記。
+第三種註記即是各州各年分加總，我以紫色作為註記。
 
 ###程式碼
 用ggplot2作圖，x=YEAR；y=variable，
@@ -62,9 +64,8 @@ p=ggplot(polio.sumYear, aes(YEAR, variable)) + geom_tile(aes(fill = polio.sumYea
 print(p)
 ```
 ###圖形呈現，按照是否可以輕易看懂圖形給分 
-```
 ![小兒麻痺在美國各州的發生率變化](https://raw.githubusercontent.com/sres320/image/master/0516.png)
-```
+
 ###解釋圖形
 我將美國各州放在y軸(即variable)，年份為x軸，
 
