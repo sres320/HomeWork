@@ -78,10 +78,3 @@ print(p)
 這代表小兒麻痺發生率逐日降低。
 
 
-  YEAR WEEK variable value
-1 1928    1  ALABAMA  0.00
-2 1928    2  ALABAMA  0.00
-3 1928    3  ALABAMA  0.04
-4 1928    4  ALABAMA  0.00
-5 1928    5  ALABAMA  0.00
-6 1928    6  ALABAMA  0.00
