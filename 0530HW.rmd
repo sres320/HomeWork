@@ -1,0 +1,108 @@
+---
+title: "乳癌預測模型"
+output: github_document
+---
+#乳癌預測模型
+
+##資料前處理
+
+###解釋資料
+Description: Predict whether a cancer is malignant or benign from biopsy details.
+
+Type: Binary Classification
+
+Dimensions: 699 instances, 11 attributes
+
+Inputs: Integer (Nominal)
+
+Output: Categorical, 2 class labels
+
+1.Sample code number: id number
+
+2.Clump Thickness: 1 - 10 皮膚襞厚度
+
+3.Uniformity of Cell Size: 1 - 10
+
+4.Uniformity of Cell Shape: 1 - 10
+
+5.Marginal Adhesion: 1 - 10 邊緣粘連
+
+6.Single Epithelial Cell Size: 1 - 10
+
+7.Bare Nuclei: 1 - 10
+
+8.Bland Chromatin: 1 - 10
+
+9.Normal Nucleoli: 1 - 10
+
+10.Mitoses: 1 - 10 有絲分裂
+
+11.Class: (2 for benign, 4 for malignant)
+
+###資料讀取
+資料讀取-1
+```
+install.packages("mlbench")
+library(mlbench)
+data(BreastCancer) 
+str(BreastCancer) #Class: benign良性/malignant陰性
+head(BreastCancer)
+```
+資料讀取-2
+```
+BreastCancerC<-BreastCancer[complete.cases(BreastCancer),!names(BreastCancer) %in% c("Id")] #把Id拿掉#選資料完整的row
+c(nrow(BreastCancer),nrow(BreastCancerC))
+```
+
+###將資料隨機分成訓練組與測試組
+隨機將3/4的資料分到訓練組（Test==F），剩下1/4為測試組（Test==T）
+```
+BreastCancerC$Test<-F #新增一個參數紀錄分組
+#隨機取1/3當Test set
+BreastCancerC[sample(1:nrow(BreastCancerC),nrow(BreastCancerC)/3),]$Test<-T 
+# 看一下 Training set : Test set 病人數
+c(sum(BreastCancerC$Test==F),sum(BreastCancerC$Test==T)) 
+```
+
+
+
+##預測模型建立
+
+###模型建立
+由於變數多，且多為連續變項，而輸出為二元類別變項，故選擇邏輯迴歸演算法建立模型，
+並使用雙向逐步選擇最佳參數組合。
+```
+library(rpart)
+fit = rpart (Class~., data = Class)
+if (!require('rpart')){ 
+BreastCancerC$Class<-factor(BreastCancerC$Class,levels=c("malignant","benign")) 
+set.seed(1000) 
+fit<-rpart(Class~.,data=BreastCancerC[BreastCancerC$Test==F,]) 
+install.packages("rpart.plot") 
+library(rpart.plot) 
+summary(fit) 
+plot(fit) 
+prp(fit) 
+```
+
+##預測模型驗證
+```
+MinePred = predict(fit,newdata = BreastCancerC[BreastCancerC$Test==T,],type = "class") 
+MineAns = ifelse(MinePred < 0.5,"benign","malignant") #<0.5: Level 1  ##前後擺放問題
+MineAns = factor(MineAns,levels = c("malignant","benign")) ##這一行需要嗎?
+install.packages("caret") 
+library(caret) 
+table(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class) 
+```
+-敏感度：`sensitivity(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
+-特異性：`specificity(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
+-陽性預測率：`posPredValue(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
+-陰性預測率：`negPredValue(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
+
+
+
+
+
+
+
+
