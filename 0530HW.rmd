@@ -1,12 +1,12 @@
 ---
-title: "¨ÅÀù¹w´ú¼Ò«¬"
+title: "ä¹³ç™Œé æ¸¬æ¨¡å‹"
 output: github_document
 ---
-#¨ÅÀù¹w´ú¼Ò«¬
+#ä¹³ç™Œé æ¸¬æ¨¡å‹
 
-##¸ê®Æ«e³B²z
+##è³‡æ–™å‰è™•ç†
 
-###¸ÑÄÀ¸ê®Æ
+###è§£é‡‹è³‡æ–™
 Description: Predict whether a cancer is malignant or benign from biopsy details.
 
 Type: Binary Classification
@@ -19,13 +19,13 @@ Output: Categorical, 2 class labels
 
 1.Sample code number: id number
 
-2.Clump Thickness: 1 - 10 ¥Ö½§ÃÎ«p«×
+2.Clump Thickness: 1 - 10 çš®è†šè¥åšåº¦
 
 3.Uniformity of Cell Size: 1 - 10
 
 4.Uniformity of Cell Shape: 1 - 10
 
-5.Marginal Adhesion: 1 - 10 Ãä½tÖß³s
+5.Marginal Adhesion: 1 - 10 é‚Šç·£ç²˜é€£
 
 6.Single Epithelial Cell Size: 1 - 10
 
@@ -35,42 +35,43 @@ Output: Categorical, 2 class labels
 
 9.Normal Nucleoli: 1 - 10
 
-10.Mitoses: 1 - 10 ¦³µ·¤Àµõ
+10.Mitoses: 1 - 10 æœ‰çµ²åˆ†è£‚
 
 11.Class: (2 for benign, 4 for malignant)
 
-###¸ê®ÆÅª¨ú
-¸ê®ÆÅª¨ú-1
+###è³‡æ–™è®€å–
+è³‡æ–™è®€å–-1
 ```
 install.packages("mlbench")
 library(mlbench)
 data(BreastCancer) 
-str(BreastCancer) #Class: benign¨}©Ê/malignant³±©Ê
+str(BreastCancer) #Class: benignè‰¯æ€§/malignanté™°æ€§
 head(BreastCancer)
 ```
-¸ê®ÆÅª¨ú-2
+è³‡æ–™è®€å–-2
 ```
-BreastCancerC<-BreastCancer[complete.cases(BreastCancer),!names(BreastCancer) %in% c("Id")] #§âId®³±¼#¿ï¸ê®Æ§¹¾ãªºrow
+BreastCancerC<-BreastCancer[complete.cases(BreastCancer),!names(BreastCancer) %in% c("Id")] #æŠŠIdæ‹¿æ‰#é¸è³‡æ–™å®Œæ•´çš„row
 c(nrow(BreastCancer),nrow(BreastCancerC))
 ```
 
-###±N¸ê®ÆÀH¾÷¤À¦¨°V½m²Õ»P´ú¸Õ²Õ
-ÀH¾÷±N3/4ªº¸ê®Æ¤À¨ì°V½m²Õ¡]Test==F¡^¡A³Ñ¤U1/4¬°´ú¸Õ²Õ¡]Test==T¡^
+###å°‡è³‡æ–™éš¨æ©Ÿåˆ†æˆè¨“ç·´çµ„èˆ‡æ¸¬è©¦çµ„
+éš¨æ©Ÿå°‡3/4çš„è³‡æ–™åˆ†åˆ°è¨“ç·´çµ„ï¼ˆTest==Fï¼‰ï¼Œå‰©ä¸‹1/4ç‚ºæ¸¬è©¦çµ„ï¼ˆTest==Tï¼‰
 ```
-BreastCancerC$Test<-F #·s¼W¤@­Ó°Ñ¼Æ¬ö¿ı¤À²Õ
-#ÀH¾÷¨ú1/3·íTest set
+BreastCancerC$Test<-F #æ–°å¢ä¸€å€‹åƒæ•¸ç´€éŒ„åˆ†çµ„
+#éš¨æ©Ÿå–1/3ç•¶Test set
 BreastCancerC[sample(1:nrow(BreastCancerC),nrow(BreastCancerC)/3),]$Test<-T 
-# ¬İ¤@¤U Training set : Test set ¯f¤H¼Æ
+# çœ‹ä¸€ä¸‹ Training set : Test set ç—…äººæ•¸
 c(sum(BreastCancerC$Test==F),sum(BreastCancerC$Test==T)) 
 ```
 
 
 
-##¹w´ú¼Ò«¬«Ø¥ß
+##é æ¸¬æ¨¡å‹å»ºç«‹
 
-###¼Ò«¬«Ø¥ß
-¥Ñ©óÅÜ¼Æ¦h¡A¥B¦h¬°³sÄòÅÜ¶µ¡A¦Ó¿é¥X¬°¤G¤¸Ãş§OÅÜ¶µ¡A¬G¿ï¾ÜÅŞ¿è°jÂkºtºâªk«Ø¥ß¼Ò«¬¡A
-¨Ã¨Ï¥ÎÂù¦V³v¨B¿ï¾Ü³Ì¨Î°Ñ¼Æ²Õ¦X¡C
+###æ¨¡å‹å»ºç«‹
+ç”±æ–¼è®Šæ•¸å¤šï¼Œä¸”å¤šç‚ºé€£çºŒè®Šé …ï¼Œè€Œè¼¸å‡ºç‚ºäºŒå…ƒé¡åˆ¥è®Šé …ï¼Œ
+
+æ•…é¸æ“‡é‚è¼¯è¿´æ­¸æ¼”ç®—æ³•å»ºç«‹æ¨¡å‹ï¼Œä¸¦ä½¿ç”¨é›™å‘é€æ­¥é¸æ“‡æœ€ä½³åƒæ•¸çµ„åˆã€‚
 ```
 library(rpart)
 fit = rpart (Class~., data = Class)
@@ -85,22 +86,19 @@ plot(fit)
 prp(fit) 
 ```
 
-##¹w´ú¼Ò«¬ÅçÃÒ
+##é æ¸¬æ¨¡å‹é©—è­‰
 ```
 MinePred = predict(fit,newdata = BreastCancerC[BreastCancerC$Test==T,],type = "class") 
-MineAns = ifelse(MinePred < 0.5,"benign","malignant") #<0.5: Level 1  ##«e«áÂ\©ñ°İÃD
-MineAns = factor(MineAns,levels = c("malignant","benign")) ##³o¤@¦æ»İ­n¶Ü?
+MineAns = ifelse(MinePred < 0.5,"benign","malignant") #<0.5: Level 1  ##å‰å¾Œæ“ºæ”¾å•é¡Œ
+MineAns = factor(MineAns,levels = c("malignant","benign")) ##é€™ä¸€è¡Œéœ€è¦å—?
 install.packages("caret") 
 library(caret) 
 table(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class) 
 ```
--±Ó·P«×¡G`sensitivity(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
--¯S²§©Ê¡G`specificity(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
--¶§©Ê¹w´ú²v¡G`posPredValue(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
--³±©Ê¹w´ú²v¡G`negPredValue(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
-
-
-
+- æ•æ„Ÿåº¦ï¼š`sensitivity(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class*100)`%
+- ç‰¹ç•°æ€§ï¼š`specificity(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
+- é™½æ€§é æ¸¬ç‡ï¼š`posPredValue(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
+- é™°æ€§é æ¸¬ç‡ï¼š`negPredValue(MinePred,BreastCancerC[BreastCancerC$Test==T,]$Class)`%
 
 
 
