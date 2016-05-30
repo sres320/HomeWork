@@ -3,78 +3,97 @@ title: "0516_HOMEWORK"
 output: github_document
 ---
 
-#1928-1969¶¡¡A¤p¨à³Â·ô¦b¬ü°ê¦U¦{ªºµo¥Í²vÅÜ¤Æ
+#1928-1969é–“ï¼Œå°å…’éº»ç—ºåœ¨ç¾åœ‹å„å·çš„ç™¼ç”Ÿç‡è®ŠåŒ–
 
-##¸ê®Æ«e³B²z
+##è³‡æ–™å‰è™•ç†
 
-###§â¸ê®ÆÅª¶i¨Ó
-§â¸ê®Æ¸ò¦¹ÀÉ®×©ñ¦b¦P¤@­Ó¦a¤è¡AµM«áÅª¶i¨Ó¡C
+###æŠŠè³‡æ–™è®€é€²ä¾†
+æŠŠè³‡æ–™è·Ÿæ­¤æª”æ¡ˆæ”¾åœ¨åŒä¸€å€‹åœ°æ–¹ï¼Œç„¶å¾Œè®€é€²ä¾†ã€‚
 ```
 polio = read.csv("POLIO_Incidence.csv",stringsAsFactors=F)
 head(polio)
 ```
-###±N¼eªí®æÂà¬°ªøªí®æ
-±N¼eªí®æÂà¬°ªøªí®æ,¥H¦~(YEAR)/¶g(WEEK)¬°°ò·Ç,¦U¦{¦Wcolumn¥´´²ÅÜªø¡A
+###å°‡å¯¬è¡¨æ ¼è½‰ç‚ºé•·è¡¨æ ¼
+å°‡å¯¬è¡¨æ ¼è½‰ç‚ºé•·è¡¨æ ¼,ä»¥å¹´(YEAR)/é€±(WEEK)ç‚ºåŸºæº–,å„å·åcolumnæ‰“æ•£è®Šé•·ï¼Œ
 
-melt­n¥ı¤U¸üreshape¤~¥i¥Î¡C
+meltè¦å…ˆä¸‹è¼‰reshapeæ‰å¯ç”¨ã€‚
 ```
 install.packages("reshape")
 library(reshape)
 polio.m = melt(polio,id.vars=c('YEAR','WEEK'),stringsAsFactors=F)
 head(polio.m)
 ```
+<<<<<<< HEAD:0516HW+.rmd
 ###³B²z¯Ê­È
 ³B²z¯Ê­È,±N"-"Âà¬°NA¡A±NvalueÄæ¦ìÂà¬°¼Æ­È¡C¡C
 
 (¦]¬°¤@¨ÇÅª¸ê®Æ¤è­±ªº°İÃD¡A©Ò¥H­n¥Îas.character()¥ıÂà¤@¦¸­È)
+=======
+###è™•ç†ç¼ºå€¼
+è™•ç†ç¼ºå€¼,å°‡"-"è½‰ç‚ºNAï¼Œå°‡valueæ¬„ä½è½‰ç‚ºæ•¸å€¼ã€‚ã€‚
+
+(å› ç‚ºä¸€äº›è®€è³‡æ–™æ–¹é¢çš„å•é¡Œï¼Œæ‰€ä»¥è¦ç”¨as.character()å…ˆè½‰ä¸€æ¬¡å€¼)
+>>>>>>> origin/master:0516HW.rmd
 ```
 polio.m[polio.m$value == "-",]$value = NA                     
 polio.m$value = as.numeric(as.character(polio.m$value))    
 ```
-###­pºâ¦~«×µo¥Í²v
-¦U¦{¦U¦~«×¥[Á`¡A­pºâ¸Ó¦~«×ªºÁ`µo¥Í²v¡C
+###è¨ˆç®—å¹´åº¦ç™¼ç”Ÿç‡
+å„å·å„å¹´åº¦åŠ ç¸½ï¼Œè¨ˆç®—è©²å¹´åº¦çš„ç¸½ç™¼ç”Ÿç‡ã€‚
 ```
 polio.sumYear = aggregate(value~YEAR+variable,data=polio.m,FUN=sum,na.rm=F)
 head(polio.sumYear)
 ```
 
 
-##µøÄ±µe§e²{
+##è¦–è¦ºåŒ–å‘ˆç¾
 
-###¥ı¤U¸üggplot2¤~¥i¥H¥Î
+###å…ˆä¸‹è¼‰ggplot2æ‰å¯ä»¥ç”¨
 ```
 install.packages("ggplot2")
 library(ggplot2)
 ```
-###¸ÑÄÀ¦p¦ó¿ï¾Ü¹Ï§ÎºØÃş
-¦]¬°Ä±±o­n©ñ¤J¤T­Ó­±¦Vªº¸ê®Æ(¤Tºû)¡A´N·Q¨ìheatmap³o­Ó§Î¦¡¨Óªí¥Ü¡A
+###è§£é‡‹å¦‚ä½•é¸æ“‡åœ–å½¢ç¨®é¡
+å› ç‚ºè¦ºå¾—è¦æ”¾å…¥ä¸‰å€‹é¢å‘çš„è³‡æ–™(ä¸‰ç¶­)ï¼Œå°±æƒ³åˆ°heatmapé€™å€‹å½¢å¼ä¾†è¡¨ç¤ºï¼Œ
 
-¦]¬°¥¦¥]§tX.Y¶b¡A¨Ã¥B¥i¥H¦b¬Û¹ïÀ³ªºªÅ®æ¶ñ¤WÃC¦â°µ²Ä¤TºØµù°O¡A
+å› ç‚ºå®ƒåŒ…å«X.Yè»¸ï¼Œä¸¦ä¸”å¯ä»¥åœ¨ç›¸å°æ‡‰çš„ç©ºæ ¼å¡«ä¸Šé¡è‰²åšç¬¬ä¸‰ç¨®è¨»è¨˜ï¼Œ
 
+<<<<<<< HEAD:0516HW+.rmd
 ²Ä¤TºØµù°O§Y¬O¦U¦{¦U¦~¤À¥[Á`¡A§Ú¥Hµµ¦â§@¬°µù°O¡C
+=======
+ç¬¬ä¸‰ç¨®è¨»è¨˜å³æ˜¯å„å·å„å¹´åˆ†åŠ ç¸½ï¼Œæˆ‘ä»¥ç´«è‰²ä½œç‚ºè¨»è¨˜ã€‚
+>>>>>>> origin/master:0516HW.rmd
 
-###µ{¦¡½X
-¥Îggplot2§@¹Ï¡Ax=YEAR¡Fy=variable¡A
+###ç¨‹å¼ç¢¼
+ç”¨ggplot2ä½œåœ–ï¼Œx=YEARï¼›y=variableï¼Œ
 
-®ÇÃä¼Ğ°OÃC¦âªºtitle¬°¡uµo¥Í²v¡v¡A¼Æ­È¶V°ªÃC¦â¶V±µªñµµ¦â¡A¶V§C¶V±µªñ¥Õ¦â¡A
+æ—é‚Šæ¨™è¨˜é¡è‰²çš„titleç‚ºã€Œç™¼ç”Ÿç‡ã€ï¼Œæ•¸å€¼è¶Šé«˜é¡è‰²è¶Šæ¥è¿‘ç´«è‰²ï¼Œè¶Šä½è¶Šæ¥è¿‘ç™½è‰²ï¼Œ
 
-¨Ã¦b1955¦~¤Wµe¤W¤@±ø¶Â¦âµê½u¡C
+ä¸¦åœ¨1955å¹´ä¸Šç•«ä¸Šä¸€æ¢é»‘è‰²è™›ç·šã€‚
 ```
-p=ggplot(polio.sumYear, aes(YEAR, variable)) + geom_tile(aes(fill = polio.sumYear$value),colour = "white") + scale_fill_gradient(name="µo¥Í²v", low = "white",high = "Navy")+ geom_vline(xintercept = 1955,colour= "black",linetype = "longdash" )
+p=ggplot(polio.sumYear, aes(YEAR, variable)) + geom_tile(aes(fill = polio.sumYear$value),colour = "white") + scale_fill_gradient(name="ç™¼ç”Ÿç‡", low = "white",high = "Navy")+ geom_vline(xintercept = 1955,colour= "black",linetype = "longdash" )
 print(p)
 ```
+<<<<<<< HEAD:0516HW+.rmd
 ###¹Ï§Î§e²{¡A«ö·Ó¬O§_¥i¥H»´©ö¬İÀ´¹Ï§Îµ¹¤À 
 ![¤p¨à³Â·ô¦b¬ü°ê¦U¦{ªºµo¥Í²vÅÜ¤Æ](https://raw.githubusercontent.com/sres320/image/master/0516.png)
 
 ###¸ÑÄÀ¹Ï§Î
 §Ú±N¬ü°ê¦U¦{©ñ¦by¶b(§Yvariable)¡A¦~¥÷¬°x¶b¡A
+=======
+###åœ–å½¢å‘ˆç¾ï¼ŒæŒ‰ç…§æ˜¯å¦å¯ä»¥è¼•æ˜“çœ‹æ‡‚åœ–å½¢çµ¦åˆ† 
+![å°å…’éº»ç—ºåœ¨ç¾åœ‹å„å·çš„ç™¼ç”Ÿç‡è®ŠåŒ–](https://raw.githubusercontent.com/sres320/image/master/0516.png)
 
-¨Ã¦b1955¦~µe¤W¼Ğ°O¡A¦]¬°¸Ó¦~¶}©l¦³¤p¨à³Â·ô¬Ì­]¡A
+###è§£é‡‹åœ–å½¢
+æˆ‘å°‡ç¾åœ‹å„å·æ”¾åœ¨yè»¸(å³variable)ï¼Œå¹´ä»½ç‚ºxè»¸ï¼Œ
+>>>>>>> origin/master:0516HW.rmd
 
-¥i¥H«Ü©úÅãªº¬İ¥X±q1930¥ª¥k¤p¨à³Â·ô¤éÁÍÄY­«¡A¨Ã¦b1950¦~¥N¨ì¹FÄA®p¡A
+ä¸¦åœ¨1955å¹´ç•«ä¸Šæ¨™è¨˜ï¼Œå› ç‚ºè©²å¹´é–‹å§‹æœ‰å°å…’éº»ç—ºç–«è‹—ï¼Œ
 
-¦ı¦b1955¦~¬Ì­]²£¥Í«á¡A¦bµê½uªº¥kÃä¥i¥H»¡¬O´X¥G¬İ¤£¨ìµµ¦âªºÂÜ¸ñ¡A
+å¯ä»¥å¾ˆæ˜é¡¯çš„çœ‹å‡ºå¾1930å·¦å³å°å…’éº»ç—ºæ—¥è¶¨åš´é‡ï¼Œä¸¦åœ¨1950å¹´ä»£åˆ°é”é¡›å³°ï¼Œ
 
-³o¥Nªí¤p¨à³Â·ôµo¥Í²v³v¤é­°§C¡C
+ä½†åœ¨1955å¹´ç–«è‹—ç”¢ç”Ÿå¾Œï¼Œåœ¨è™›ç·šçš„å³é‚Šå¯ä»¥èªªæ˜¯å¹¾ä¹çœ‹ä¸åˆ°ç´«è‰²çš„è¹¤è·¡ï¼Œ
+
+é€™ä»£è¡¨å°å…’éº»ç—ºç™¼ç”Ÿç‡é€æ—¥é™ä½ã€‚
 
 
